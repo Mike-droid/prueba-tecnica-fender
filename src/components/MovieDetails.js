@@ -18,6 +18,11 @@ export const MovieDetails = ({ movie }) => {
     fetchCharacters()
   }, [movie.characters])
 
+  const getCharacterUrl = (character) => {
+    const id = Number(character.url.split('/').slice(-2)[0])
+    return id;
+  }
+
   return (
     <div>
       <h2>
@@ -28,13 +33,15 @@ export const MovieDetails = ({ movie }) => {
       <p>Producer(s): {movie.producer}</p>
       <p>Opening crawl: {movie.opening_crawl}</p>
       <ul>
-        {charactersInfo.map(char => (
-          <li key={char.name}>
-            <Link href={char.url}>
-              {char.name}
-            </Link>
-          </li>
-        ))}
+        {charactersInfo.map((char) => {
+          const newId = getCharacterUrl(char)
+          return (
+            <li key={char.name}>
+              <Link href={`/characters/${newId}`}>
+                {char.name}
+              </Link>
+            </li>
+        )})}
       </ul>
     </div>
   )
