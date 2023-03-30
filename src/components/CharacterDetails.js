@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import styles from '@/styles/CharacterDetail.module.scss'
 
 export const CharacterDetails = ({ character }) => {
   const [showWorldInfo, setShowWorldInfo] = useState(false)
@@ -37,7 +38,7 @@ export const CharacterDetails = ({ character }) => {
   }
 
   return (
-    <>
+    <section className={styles.container}>
       <h1>{character.name}</h1>
       <h2>Data:</h2>
       <p>Birth year: {character.birth_year}</p>
@@ -66,6 +67,6 @@ export const CharacterDetails = ({ character }) => {
           </ul>
         )
       }
-    </>
+    </section>
   )
 }
