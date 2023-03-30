@@ -4,6 +4,8 @@ export const CharacterDetails = ({ character }) => {
   const [showWorldInfo, setShowWorldInfo] = useState(false)
   const [worldInfo, setWorldInfo] = useState({})
   const [films, setFilms] = useState([])
+  const [loadingFilms, setLoadingFilms] = useState(true)
+  const [loadingWorlds, setLoadingWorlds] = useState(true)
 
   useEffect(() => {
     async function fetchFilms() {
@@ -14,6 +16,7 @@ export const CharacterDetails = ({ character }) => {
       })
       const data = await Promise.all(promises)
       setFilms(data);
+      setLoadingFilms(false);
     }
     fetchFilms()
   }, [character.films]);
@@ -22,8 +25,8 @@ export const CharacterDetails = ({ character }) => {
     async function fetchWorld() {
       const response = await fetch(character.homeworld)
       const data = await response.json()
-      console.log(data)
       setWorldInfo(data)
+      setLoadingWorlds(false);
       return data
     }
     fetchWorld()
@@ -41,8 +44,9 @@ export const CharacterDetails = ({ character }) => {
       <p>Gender: {character.gender}</p>
       <p>Hair color: {character.hair_color}</p>
       <p>Eye color: {character.eye_color}</p>
-      <br />
-      <p onClick={toggleWorldInfo}>Homeworld name: {worldInfo.name}</p>
+      {
+        loadingWorlds? <p>Loading world...</p> : ( <p onClick={toggleWorldInfo}>Homeworld name: {worldInfo.name}</p> )
+      }
       {showWorldInfo && (
         <>
           <p>Homeworld population: {worldInfo.population}</p>
@@ -50,15 +54,18 @@ export const CharacterDetails = ({ character }) => {
           <p>Homeworld gravity: {worldInfo.gravity}</p>
         </>
       )}
-      <br />
       <h3>Films:</h3>
-      <ul>
-        {
-          films.map((film) => (
-            <li key={film.title}>{film.title}</li>
-          ))
-        }
-      </ul>
+      {
+        loadingFilms? <p>Loading films...</p> : (
+          <ul>
+            {
+              films.map((film) => (
+                <li key={film.title}>{film.title}</li>
+              ))
+            }
+          </ul>
+        )
+      }
     </>
   )
 }

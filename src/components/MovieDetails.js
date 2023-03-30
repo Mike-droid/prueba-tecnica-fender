@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 
 export const MovieDetails = ({ movie }) => {
   const [charactersInfo, setCharactersInfo] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCharacters() {
@@ -13,6 +14,7 @@ export const MovieDetails = ({ movie }) => {
       })
       const data = await Promise.all(promises)
       setCharactersInfo(data)
+      setLoading(false)
     }
     fetchCharacters()
   }, [movie.characters])
@@ -31,17 +33,21 @@ export const MovieDetails = ({ movie }) => {
       <p>Director: {movie.director}</p>
       <p>Producer(s): {movie.producer}</p>
       <p>Opening crawl: {movie.opening_crawl}</p>
-      <ul>
-        {charactersInfo.map((char) => {
-          const newId = getCharacterUrl(char)
-          return (
-            <li key={char.name}>
-              <Link href={`/characters/${newId}`}>
-                {char.name}
-              </Link>
-            </li>
-        )})}
-      </ul>
+      {
+        loading? <p>Loading characters...</p> : (
+          <ul>
+            {charactersInfo.map((char) => {
+              const newId = getCharacterUrl(char)
+              return (
+                <li key={char.name}>
+                  <Link href={`/characters/${newId}`}>
+                    {char.name}
+                  </Link>
+                </li>
+            )})}
+          </ul>
+        )
+      }
     </div>
   )
 }
