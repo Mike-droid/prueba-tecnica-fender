@@ -1,0 +1,76 @@
+.movieTitle {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.crawl {
+  text-align: justify;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .container {
+    & .crawl {
+      font-size: 1.1em;
+      max-width: 50vw;
+    }
+
+    & .charactersList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & .char {
+        margin-block-end: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .container {
+    & .crawl {
+      font-size: 1.3em;
+      max-width: 50vw;
+    }
+
+    & .charactersList {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    & .movieTitle {
+      font-size: 1.7em;
+    }
+    & .crawl {
+      font-size: 1.5em;
+      max-width: 45vw;
+    }
+
+    & .charactersList {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .container {
+    & .movieTitle {
+      font-size: 2em;
+    }
+    & .crawl {
+      font-size: 2em;
+      max-width: 35vw;
+    }
+
+    & .charactersList {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

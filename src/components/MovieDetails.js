@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import styles from '@/styles/MovieDetail.module.scss'
 
 export const MovieDetails = ({ movie }) => {
   const [charactersInfo, setCharactersInfo] = useState([])
@@ -25,23 +26,23 @@ export const MovieDetails = ({ movie }) => {
   }
 
   return (
-    <div>
-      <h2>
+    <div className={styles.container}>
+      <h2 className={styles.movieTitle}>
         Episode {movie.episode_id}: {movie.title}
       </h2>
+      <p className={styles.crawl}>{movie.opening_crawl}</p>
       <p>Release date: {movie.release_date}</p>
       <p>Director: {movie.director}</p>
       <p>Producer(s): {movie.producer}</p>
-      <p>Opening crawl: {movie.opening_crawl}</p>
       {
         loading? <p>Loading characters...</p> : (
           <>
             <h3>Characters in the movie:</h3>
-            <ul>
+            <ul className={styles.charactersList}>
               {charactersInfo.map((char) => {
                 const newId = getCharacterUrl(char)
                 return (
-                  <li key={char.name}>
+                  <li key={char.name} className={styles.char}>
                     <Link href={`/characters/${newId}`}>
                       {char.name}
                     </Link>

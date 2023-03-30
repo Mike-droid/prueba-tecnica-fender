@@ -14,6 +14,10 @@ body {
     text-decoration: none;
   }
 
+  & a:hover{
+    text-decoration: underline;
+  }
+
   & ul {
     padding: 0;
 
