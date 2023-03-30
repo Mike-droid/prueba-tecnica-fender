@@ -9,7 +9,6 @@ export const MovieDetails = ({ movie }) => {
       const promises = movie.characters.map(async (url) => {
         const response = await fetch(url)
         const charData = await response.json()
-        console.log('charData: ', charData);
         return charData
       })
       const data = await Promise.all(promises)
