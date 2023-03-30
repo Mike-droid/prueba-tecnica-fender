@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { SWAPI_URL } from './api/apiURL';
+import styles from '../styles/Home.module.scss'
 
 export default function Home({ data }) {
   const [loading, setLoading] = useState(true);
@@ -45,16 +46,16 @@ export default function Home({ data }) {
         {loading && <p> Loading...</p>}
         {errorState.hasError && <p>Oh no! There is an error!</p>}
         {!loading && !errorState.hasError && (
-          <div>
-            <button onClick={sortMovies}>
+          <div className={styles.container}>
+            <button onClick={sortMovies} className={styles.button}>
               Sort by number of films ({sortOrder})
             </button>
-            <ul>
+            <ul className={styles.movieList}>
               {movies?.results?.map((movie) => {
                 const newId = changeEpisodeId(movie.episode_id);
                 return (
-                  <li key={movie.title}>
-                    <h2>
+                  <li key={movie.title} className={styles.movieCard}>
+                    <h2 className={styles.movieTitle}>
                       <Link href={`/films/${newId}`}>
                         Episode {movie.episode_id}: {movie.title}
                       </Link>

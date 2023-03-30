@@ -5,12 +5,20 @@ body {
   background-color: black;
   color: yellow;
 
+  button {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
   & a{
     color: white;
     text-decoration: none;
   }
 
-  & li {
-    list-style: none;
+  & ul {
+    padding: 0;
+
+    & li {
+      list-style: none;
+    }
   }
 }
