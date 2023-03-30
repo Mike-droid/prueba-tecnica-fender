@@ -7,6 +7,7 @@ export default function Home({ data }) {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [errorState, setErrorState] = useState({ hasError: false });
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     data ? setMovies(data) : handleError();
@@ -18,10 +19,22 @@ export default function Home({ data }) {
   };
 
   const changeEpisodeId = (id) => {
-    let result = id
+    let result = id;
     result > 3 ? (result -= 3) : (result += 3);
-    return result
-  }
+    return result;
+  };
+
+  const sortMovies = () => {
+    const sortedMovies = [...movies.results];
+    if (sortOrder === 'asc') {
+      sortedMovies.sort((a, b) => a.episode_id - b.episode_id);
+      setSortOrder('desc');
+    } else {
+      sortedMovies.sort((a, b) => b.episode_id - a.episode_id);
+      setSortOrder('asc');
+    }
+    setMovies({ ...movies, results: sortedMovies });
+  };
 
   return (
     <div>
@@ -32,22 +45,28 @@ export default function Home({ data }) {
         {loading && <p> Loading...</p>}
         {errorState.hasError && <p>Oh no! There is an error!</p>}
         {!loading && !errorState.hasError && (
-          <ul>
-            {movies?.results?.map((movie) => {
-              const newId = changeEpisodeId(movie.episode_id)
-              return (
-                <li key={movie.title}>
-                  <h2>
-                    <Link href={`/films/${newId}`}>
-                      Episode {movie.episode_id}: {movie.title}
-                    </Link>
-                  </h2>
-                  <p>Release date: {movie.release_date}</p>
-                  <p>Director: {movie.director}</p>
-                  <p>Producer(s): {movie.producer}</p>
-                </li>
-            )})}
-          </ul>
+          <div>
+            <button onClick={sortMovies}>
+              Sort by number of films ({sortOrder})
+            </button>
+            <ul>
+              {movies?.results?.map((movie) => {
+                const newId = changeEpisodeId(movie.episode_id);
+                return (
+                  <li key={movie.title}>
+                    <h2>
+                      <Link href={`/films/${newId}`}>
+                        Episode {movie.episode_id}: {movie.title}
+                      </Link>
+                    </h2>
+                    <p>Release date: {movie.release_date}</p>
+                    <p>Director: {movie.director}</p>
+                    <p>Producer(s): {movie.producer}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         )}
       </section>
     </div>

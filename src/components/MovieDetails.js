@@ -35,17 +35,20 @@ export const MovieDetails = ({ movie }) => {
       <p>Opening crawl: {movie.opening_crawl}</p>
       {
         loading? <p>Loading characters...</p> : (
-          <ul>
-            {charactersInfo.map((char) => {
-              const newId = getCharacterUrl(char)
-              return (
-                <li key={char.name}>
-                  <Link href={`/characters/${newId}`}>
-                    {char.name}
-                  </Link>
-                </li>
-            )})}
-          </ul>
+          <>
+            <h3>Characters in the movie:</h3>
+            <ul>
+              {charactersInfo.map((char) => {
+                const newId = getCharacterUrl(char)
+                return (
+                  <li key={char.name}>
+                    <Link href={`/characters/${newId}`}>
+                      {char.name}
+                    </Link>
+                  </li>
+              )})}
+            </ul>
+          </>
         )
       }
     </div>
